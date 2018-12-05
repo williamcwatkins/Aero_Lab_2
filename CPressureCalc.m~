@@ -1,0 +1,19 @@
+function [CPressureVector] = CPressureCalc(data)
+%CPressureCalc calculates the coefficient of pressure at each point on the
+% airfoil
+    rows = size(data, 1);
+    CPressureVector = zeros(rows, 18);
+    
+    for i = 1:rows % Calculate CPressure for each row
+        columnstart = 6;
+        
+        for p = 1 + columnstart:17 + columnstart % CPressure at each port
+            CPressure(p) = 
+        end
+        
+        % Insert angle of attach at end of row
+        CPressureVector(i,18) = data(i,18 + columnstart);
+    end
+    
+end
+
