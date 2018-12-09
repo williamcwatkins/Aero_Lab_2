@@ -44,6 +44,8 @@ CPressure = CPressureCalc(DaGuds);
 % Calculate Cl and Cd
 [CLift, CDrag, AoA, Velocity] = WillItFlyMan(CPressure);
 
+
+
 % CPressure is sorted by AoA and within AoA by velocity
 % Change the next two variables for different plots of cpressure vs %chord
 velocity = 1; % 1 is 9, 2 is 17, 3 is 34
@@ -54,3 +56,9 @@ hold on
 plot(LocationBot(1,:) ./ c, [CPressure(velocity * aoa,11:18) CPressure(velocity * aoa,2)])
 hold off
 
+velocity = 1; % As above, 1 is 9, 2 is 17, 3 is 34
+figure(2)
+plot(AoA(velocity,:), CLift(velocity,:));
+hold on
+plot(AoA(velocity,:), CDrag(velocity,:));
+hold off

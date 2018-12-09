@@ -15,9 +15,9 @@ global Location c
 c = 3.5;
 LocationTop = [0 .175 .35 .7 1.05 1.4 1.75 2.1 2.8 3.5;...
                 .14665 .33075 .4018 .476 .49 .4774 .4403 .38325 .21875 0];
-LocationBot = [3.5 2.8 2.1 1.4 1.05 .7 .35 .175 ;...
-                0 0 0 0 0 .0014 .0175 .03885];
-Location = [LocationTop LocationBot(:,2:end)];
+LocationBot = [3.5 2.8 2.1 1.4 1.05 .7 .35 .175 0;...
+                0 0 0 0 0 .0014 .0175 .03885 .14665];
+Location = [LocationTop LocationBot(:,2:end - 1)];
 
 %% Let's read in our data and sort it
 DaGuds = ReadMahInput();
@@ -44,8 +44,19 @@ CPressure = CPressureCalc(DaGuds);
 % Calculate Cl and Cd
 [CLift, CDrag, AoA, Velocity] = WillItFlyMan(CPressure);
 
+for i = 1:size(CLift,1) / 3
+    CLift9
+end
+
+% CPressure is sorted by AoA and within AoA by velocity
+% Change the next two variables for different plots of cpressure vs %chord
+velocity = 1; % 1 is 9, 2 is 17, 3 is 34
+aoa = 1; % 1 is -16, 2 is -15, etc. onto 32 for 16
 figure(1)
-plot(LocationTop(1,:) ./ c, CPressure(1,2:11))
+plot(LocationTop(1,:) ./ c, CPressure(velocity * aoa,2:11))
 hold on
-plot(LocationBot(1,:) ./ c, [CPressure(1,11:18)])
+plot(LocationBot(1,:) ./ c, [CPressure(velocity * aoa,11:18) CPressure(velocity * aoa,2)])
 hold off
+
+figure(2)
+plot(
