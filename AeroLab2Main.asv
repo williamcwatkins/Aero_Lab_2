@@ -15,12 +15,16 @@ global Location c
 c = 3.5;
 LocationTop = [0 .175 .35 .7 1.05 1.4 1.75 2.1 2.8 3.5;...
                 .14665 .33075 .4018 .476 .49 .4774 .4403 .38325 .21875 0];
-LocationBot = [3.5 2.8 2.1 1.4 1.05 .7 .35 .175;...
+LocationBot = [3.5 2.8 2.1 1.4 1.05 .7 .35 .175 ;...
                 0 0 0 0 0 .0014 .0175 .03885];
 Location = [LocationTop LocationBot(:,2:end)];
 
 %% Let's read in our data and sort it
 DaGuds = ReadMahInput();
+
+DaGuds = SortAoA(DaGuds);
+
+[DaGuds, AoAIndex] = SortVelocity(DaGuds);
 
 % this is for the sample data
 %DaGuds = csvread('AirfoilPressure_S013_G03.csv',1,0);
@@ -31,7 +35,7 @@ DaGuds = ReadMahInput();
 DaGuds = TrailingEdge(DaGuds);
 
 % Average the readings for each AoA
-DaGuds = AverageOut(DaGuds);
+DaGuds = AverageOut(DaGuds, AoAIndex);
 
 % Calculate coefficient of pressure along the airfoil, vector also has
 % angle of attack in last column
